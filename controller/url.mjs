@@ -8,14 +8,21 @@ const handlePostUrl = async(req, res) => {
 
     const body = req.body; 
     if(!body.url) 
-        return res.status(400).json({ status: 'Unsuccessful', msg: 'Please Provide the valid url'}); 
+        return res.status(400).json({ status: 'Unsuccessful', msg: 'No url found'}); 
 
+
+    const entry = URL.findOne({redirectUrl: body.url}); 
+
+    if(entry.redirectUrl === body.url) {
+        return res.status(400).json({ status: 'Unsuccessful', msg: 'Similar Entry Found'});
+    }
     const shortId = shortid(8)
 
     await URL.create({
         shortId: shortId, 
         redirectUrl: body.url, 
-        visitHistory: []
+        visitHistory: [],
+        createdBy: req.user._id
     })
 
     return res.status(201).json({status: 'Successful', 

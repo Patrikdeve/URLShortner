@@ -1,5 +1,5 @@
 
-import mongoose from "mongoose";
+import mongoose, { Mongoose } from "mongoose";
 
 const urlSchema = new mongoose.Schema({
 
@@ -17,7 +17,11 @@ const urlSchema = new mongoose.Schema({
         timestamps: {
             type: Number
         }
-    }]
+    }], 
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "users"
+    }
 
 }, {timestamps: true})
 
