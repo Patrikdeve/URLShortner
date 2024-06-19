@@ -24,9 +24,9 @@ const handleUserLogin = async(req, res) => {
             {status: 'Unsuccesfull' , msg: `No Such User Present`}
         )
     
-    const sessionId = uuidv4(); 
-    setUser(sessionId, entry); 
-    res.cookie('uid', sessionId); 
+    
+     const token = setUser(entry)
+    res.cookie('uid', token); 
     return res.redirect('/'); 
 }
 
